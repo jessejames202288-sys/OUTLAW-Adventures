@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "OUTLAW Adventures"
+description = "A mobile-friendly outdoor adventure marketplace for discovering and booking hunting guides, fishing charters, ATV adventures, dirt bike trips, and snowmobile tours."
+version = "1.0.0"
+id = "artifacts/outlaw-adventures"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25268
+
+[services.development]
+run = "pnpm --filter @workspace/outlaw-adventures run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/outlaw-adventures", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/outlaw-adventures/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25268"
+BASE_PATH = "/"
